@@ -127,6 +127,19 @@ export function SettingsModal({
                         Notify
                     </label>
                 </div>
+
+                <div className="mb-4 flex items-center">
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="autostart"
+                            checked={notify}
+                            onChange={(e) => onNotifyChange(e.target.checked)}
+                            className="mr-2"
+                        />
+                        Notify
+                    </label>
+                </div>
             </div>
         </div>
     );
