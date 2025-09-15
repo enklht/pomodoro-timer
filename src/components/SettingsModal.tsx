@@ -26,8 +26,8 @@ export function SettingsModal({
     if (!showSettings) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded shadow-lg w-80 sm:w-96">
+        <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-gray-600 text-white p-6 rounded shadow-lg w-80 sm:w-96">
                 <h2 className="text-xl font-bold mb-4">Settings</h2>
 
                 <div className="mb-4">
@@ -61,25 +61,28 @@ export function SettingsModal({
                 </div>
 
                 <div className="mb-4 flex items-center">
-                    <input
-                        type="checkbox"
-                        checked={autoStart}
-                        onChange={(e) => onAutoStartChange(e.target.checked)}
-                        className="mr-2"
-                    />
-                    <label>Auto Start</label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="autostart"
+                            checked={autoStart}
+                            onChange={(e) => onAutoStartChange(e.target.checked)}
+                            className="mr-2"
+                        />
+                        Auto Start
+                    </label>
                 </div>
 
                 <div className="flex justify-end space-x-2">
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+                        className="px-4 py-2 bg-gray-500 rounded hover:bg-gray-400"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-300"
                     >
                         Save
                     </button>

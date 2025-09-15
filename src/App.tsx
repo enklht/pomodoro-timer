@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { SettingsModal } from "./components/SettingsModal";
+import TimerCircle from "./components/TimerCircle";
 
 export default function App() {
   const [timeLeft, setTimeLeft] = useState(25 * 60);
@@ -26,7 +28,7 @@ export default function App() {
 
     const timer = setInterval(() => {
       setTimeLeft(t => {
-        if (t > 1) return t - 1;
+        if (t > 0) return t - 1;
 
         // Time's up
         if (!autoStart) setIsRunning(false);
@@ -53,50 +55,32 @@ export default function App() {
 
   const toggleTimer = () => setIsRunning(!isRunning);
 
-  const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
-  const seconds = String(timeLeft % 60).padStart(2, "0");
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      {/* Timer Circle */}
-      <div
-        onClick={toggleTimer}
-        className={`
-          w-40 sm:w-64 md:w-80 lg:w-96
-          h-40 sm:h-64 md:h-80 lg:h-96
-          rounded-full
-          flex flex-col items-center justify-center
-          text-white cursor-pointer shadow-lg
-          transition-transform duration-20 ease-out hover:scale-110
-          transition-colors duration-500
-          ${isWork ? "bg-red-400" : "bg-blue-400"}
-        `}
-      >
-        <div className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
-          {minutes}:{seconds}
-        </div>
-        <div className="text-base sm:text-xl md:text-2xl lg:text-3xl mt-2">
-          {isWork ? "Work" : workSessions % 4 === 0 ? "Long Break" : "Short Break"}
-        </div>
-        <div className="mt-2 text-xs sm:text-sm md:text-base opacity-75">
-          {isRunning ? "Click to Pause" : "Click to Start"}
-        </div>
-      </div>
-
-
-      {/* Settings Button */}
+    <div className="relative min-h-screen bg-gray-600">
       <button
         onClick={() => setShowSettings(true)}
-        disabled={isRunning} // disable when timer is running
-        className={`mt-8 px-4 py-2 rounded text-white
-          ${isRunning
-            ? "bg-gray-400 cursor-not-allowed"
-            : "bg-gray-600 hover:bg-gray-700"}`}
+        disabled={isRunning}
+        className={`absolute top-4 right-4 p-2 rounded-full transition-colors duration-200 ${isRunning
+          ? "cursor-not-allowed"
+          : "hover:bg-gray-500"
+          }`}
+        title="Settings"
       >
-        Settings
+        <Cog6ToothIcon className="w-6 h-6 text-white" />
       </button>
 
-      {/* Settings Modal */}
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <TimerCircle
+          timeLeft={timeLeft}
+          totalTime={isWork ? workMinutes * 60 : shortBreakMinutes * 60}
+          isWork={isWork}
+          isRunning={isRunning}
+          workSessions={workSessions}
+          onClick={toggleTimer}
+        />
+      </div>
+
       <SettingsModal
         showSettings={showSettings}
         workMinutes={workMinutes}
