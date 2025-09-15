@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { playSound } from 'react-sounds';
 import { SettingsModal } from "./components/SettingsModal";
 import TimerCircle from "./components/TimerCircle";
 
@@ -17,10 +18,11 @@ export default function App() {
   const [longBreakMinutes, setLongBreakMinutes] = useState(0.05);
   const [autoStart, setAutoStart] = useState(true);
 
-  // Update timer when work/break length changes
+  const playCompletedSound = () => playSound("notification/completed");
+
   useEffect(() => {
-    setTimeLeft(isWork ? workMinutes * 60 : shortBreakMinutes * 60);
-  }, [workMinutes, shortBreakMinutes, isWork]);
+    setTimeLeft(60 * (isWork ? workMinutes : workSessions % 4 === 0 ? longBreakMinutes : shortBreakMinutes));
+  }, [workMinutes, shortBreakMinutes, longBreakMinutes]);
 
   // Timer logic
   useEffect(() => {
@@ -31,20 +33,20 @@ export default function App() {
         if (t > 0) return t - 1;
 
         // Time's up
+        playCompletedSound();
         if (!autoStart) setIsRunning(false);
 
         let nextTime: number;
 
         if (isWork) {
-          setIsWork(false)
           setWorkSessions(prev => prev + 1);
           nextTime = workSessions % 4 === 0
             ? longBreakMinutes * 60
             : shortBreakMinutes * 60;
         } else {
-          setIsWork(true)
           nextTime = workMinutes * 60;
         }
+        setIsWork(!isWork)
 
         return nextTime;
       });
@@ -73,7 +75,7 @@ export default function App() {
       <div className="flex flex-col items-center justify-center min-h-screen">
         <TimerCircle
           timeLeft={timeLeft}
-          totalTime={isWork ? workMinutes * 60 : shortBreakMinutes * 60}
+          totalTime={60 * (isWork ? workMinutes : workSessions % 4 === 0 ? longBreakMinutes : shortBreakMinutes)}
           isWork={isWork}
           isRunning={isRunning}
           workSessions={workSessions}

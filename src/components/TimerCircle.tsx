@@ -34,14 +34,15 @@ export const TimerCircle: React.FC<TimerCircleProps> = ({
         <div
             onClick={onClick}
             className={`
-        w-40 sm:w-64 md:w-80 lg:w-96
-        h-40 sm:h-64 md:h-80 lg:h-96
+        w-64 md:w-80 lg:w-96
+        h-64 md:h-80 lg:h-96
+        bg-gray-500
         rounded-full
         relative
         overflow-hidden
         cursor-pointer
         shadow-lg
-        transition-transform duration-200 ease-out hover:scale-110
+        transition-[scale] duration-200 ease-out hover:scale-110
       `}
         >
             {/* Animated liquid fill */}
@@ -56,13 +57,13 @@ export const TimerCircle: React.FC<TimerCircleProps> = ({
 
             {/* Timer content */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                <div className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
+                <div className="text-4xl md:text-5xl lg:text-6xl font-bold">
                     {formatTime(timeLeft)}
                 </div>
-                <div className="text-base sm:text-xl md:text-2xl lg:text-3xl mt-2">
+                <div className="text-xl md:text-2xl lg:text-3xl mt-2">
                     {sessionType}
                 </div>
-                <div className="mt-2 text-xs sm:text-sm md:text-base opacity-75">
+                <div className="mt-2 text-sm md:text-base opacity-75">
                     {actionText}
                 </div>
             </div>
