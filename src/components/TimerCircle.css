@@ -1,0 +1,3 @@
+.transition-height-color {
+    transition: height 1s linear, background-color 0.5s;
+}

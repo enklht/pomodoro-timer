@@ -4,10 +4,12 @@ interface SettingsModalProps {
     shortBreakMinutes: number;
     longBreakMinutes: number;
     autoStart: boolean;
+    notify: boolean,
     onWorkMinutesChange: (minutes: number) => void;
     onShortBreakMinutesChange: (minutes: number) => void;
     onLongBreakMinutesChange: (minutes: number) => void;
     onAutoStartChange: (autoStart: boolean) => void;
+    onNotifyChange: (notify: boolean) => void;
     onClose: () => void;
 }
 
@@ -17,10 +19,12 @@ export function SettingsModal({
     shortBreakMinutes,
     longBreakMinutes,
     autoStart,
+    notify,
     onWorkMinutesChange,
     onShortBreakMinutesChange,
     onLongBreakMinutesChange,
     onAutoStartChange,
+    onNotifyChange,
     onClose,
 }: SettingsModalProps) {
     if (!showSettings) return null;
@@ -73,18 +77,25 @@ export function SettingsModal({
                     </label>
                 </div>
 
+                <div className="mb-4 flex items-center">
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="autostart"
+                            checked={notify}
+                            onChange={(e) => onNotifyChange(e.target.checked)}
+                            className="mr-2"
+                        />
+                        Notify
+                    </label>
+                </div>
+
                 <div className="flex justify-end space-x-2">
                     <button
                         onClick={onClose}
                         className="px-4 py-2 bg-gray-500 rounded hover:bg-gray-400"
                     >
-                        Cancel
-                    </button>
-                    <button
-                        onClick={onClose}
-                        className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-300"
-                    >
-                        Save
+                        Close
                     </button>
                 </div>
             </div>

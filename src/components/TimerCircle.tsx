@@ -1,4 +1,5 @@
 import React from 'react';
+import "./TimerCircle.css"
 
 interface TimerCircleProps {
     timeLeft: number;
@@ -42,14 +43,14 @@ export const TimerCircle: React.FC<TimerCircleProps> = ({
         overflow-hidden
         cursor-pointer
         shadow-lg
-        transition-[scale] duration-200 ease-out hover:scale-110
       `}
+        // transition-[scale] duration-200 ease-out hover:scale-110
         >
             {/* Animated liquid fill */}
             <div
                 className={`
                     absolute bottom-0 left-0 w-full
-                    transition-[height] duration-1000 linear
+                    transition-height-color
                     ${isWork ? 'bg-red-400' : 'bg-blue-400'}
                 `}
                 style={{ height: `${progressHeight}%` }}

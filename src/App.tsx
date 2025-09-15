@@ -17,6 +17,7 @@ export default function App() {
   const [shortBreakMinutes, setShortBreakMinutes] = useState(0.05);
   const [longBreakMinutes, setLongBreakMinutes] = useState(0.05);
   const [autoStart, setAutoStart] = useState(true);
+  const [notify, setNotify] = useState(true);
 
   const playCompletedSound = () => playSound("notification/completed");
 
@@ -33,8 +34,9 @@ export default function App() {
         if (t > 0) return t - 1;
 
         // Time's up
-        playCompletedSound();
-        if (!autoStart) setIsRunning(false);
+        if (notify) {
+          playCompletedSound();
+        }
 
         let nextTime: number;
 
@@ -46,7 +48,9 @@ export default function App() {
         } else {
           nextTime = workMinutes * 60;
         }
+
         setIsWork(!isWork)
+        if (!autoStart) setIsRunning(false);
 
         return nextTime;
       });
@@ -89,10 +93,12 @@ export default function App() {
         shortBreakMinutes={shortBreakMinutes}
         longBreakMinutes={longBreakMinutes}
         autoStart={autoStart}
+        notify={notify}
         onWorkMinutesChange={setWorkMinutes}
         onShortBreakMinutesChange={setShortBreakMinutes}
         onLongBreakMinutesChange={setLongBreakMinutes}
         onAutoStartChange={setAutoStart}
+        onNotifyChange={setNotify}
         onClose={() => setShowSettings(false)}
       />
     </div>
