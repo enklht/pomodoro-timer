@@ -35,16 +35,13 @@ export const TimerCircle: React.FC<TimerCircleProps> = ({
         <div
             onClick={onClick}
             className={`
-        w-64 md:w-80 lg:w-96
-        h-64 md:h-80 lg:h-96
-        bg-gray-500
-        rounded-full
-        relative
-        overflow-hidden
-        cursor-pointer
-        shadow-lg
-      `}
-        // transition-[scale] duration-200 ease-out hover:scale-110
+                w-64 md:w-80 lg:w-96
+                h-64 md:h-80 lg:h-96
+                bg-gray-500
+                rounded-full relative
+                overflow-hidden cursor-pointer shadow-lg
+                transition-[scale] duration-200 ease-out hover:scale-105
+            `}
         >
             {/* Animated liquid fill */}
             <div

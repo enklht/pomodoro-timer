@@ -6,11 +6,13 @@ interface SettingsModalProps {
     workMinutes: number;
     shortBreakMinutes: number;
     longBreakMinutes: number;
+    longBreakInterval: number;
     autoStart: boolean;
     notify: boolean,
     onWorkMinutesChange: (minutes: number) => void;
     onShortBreakMinutesChange: (minutes: number) => void;
     onLongBreakMinutesChange: (minutes: number) => void;
+    onLongBreakIntervalChange: (cycles: number) => void;
     onAutoStartChange: (autoStart: boolean) => void;
     onNotifyChange: (notify: boolean) => void;
     onClose: () => void;
@@ -21,11 +23,13 @@ export function SettingsModal({
     workMinutes,
     shortBreakMinutes,
     longBreakMinutes,
+    longBreakInterval,
     autoStart,
     notify,
     onWorkMinutesChange,
     onShortBreakMinutesChange,
     onLongBreakMinutesChange,
+    onLongBreakIntervalChange,
     onAutoStartChange,
     onNotifyChange,
     onClose,
@@ -85,6 +89,18 @@ export function SettingsModal({
                         pattern="[0-9]*"
                         value={longBreakMinutes}
                         onChange={(e) => onLongBreakMinutesChange(Number(e.target.value))}
+                        className="w-full border rounded px-2 py-1"
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label className="block mb-1">Long Break Interval</label>
+                    <input
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        value={longBreakInterval}
+                        onChange={(e) => onLongBreakIntervalChange(Number(e.target.value))}
                         className="w-full border rounded px-2 py-1"
                     />
                 </div>
