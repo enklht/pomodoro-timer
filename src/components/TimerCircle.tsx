@@ -18,9 +18,9 @@ export const TimerCircle: React.FC<TimerCircleProps> = ({
     workSessions,
     onClick
 }) => {
-    const progressHeight = isWork
-        ? (timeLeft / totalTime) * 100     // refill during break
-        : 100 - (timeLeft / totalTime) * 100; // drain during work
+    const progress = isWork
+        ? (timeLeft / totalTime)     // refill during break
+        : 1 - (timeLeft / totalTime); // drain during work
 
     const formatTime = (seconds: number) => {
         const m = String(Math.floor(seconds / 60)).padStart(2, '0');
@@ -48,10 +48,21 @@ export const TimerCircle: React.FC<TimerCircleProps> = ({
                 className={`
                     absolute bottom-0 left-0 w-full
                     transition-height-color
+                    overflow-hidden
                     ${isWork ? 'bg-red-400' : 'bg-blue-400'}
                 `}
-                style={{ height: `${progressHeight}%` }}
-            />
+                style={{
+                    height: `${progress * 100}%`,
+                } as React.CSSProperties}
+            >
+                {isRunning && [
+                    <div className="bubble" />,
+                    <div className="bubble" />,
+                    <div className="bubble" />,
+                    <div className="bubble" />,
+                    <div className="bubble" />
+                ]}
+            </div>
 
             {/* Timer content */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
@@ -65,7 +76,7 @@ export const TimerCircle: React.FC<TimerCircleProps> = ({
                     {actionText}
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
