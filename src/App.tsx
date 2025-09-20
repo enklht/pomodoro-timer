@@ -77,8 +77,8 @@ export default function App() {
       <button
         onClick={() => setShowSettings(true)}
         disabled={isRunning}
-        className={`absolute top-4 right-4 p-2 rounded-full text-white/80 transition-colors duration-200
-          ${isRunning ? "cursor-not-allowed" : "hover:text-white hover:bg-gray-500"}`}
+        className={`absolute top-4 right-4 p-2 rounded-full text-gray-200 transition-colors duration-200
+          ${isRunning ? "cursor-not-allowed text-gray-500" : "hover:text-white hover:bg-gray-500"}`}
         title="Settings"
       >
         <Cog6ToothIcon className="w-6 h-6" />
@@ -97,8 +97,8 @@ export default function App() {
           <button
             onClick={handleReset}
             disabled={isRunning}
-            className={`p-2 rounded-full text-white/80 transition-colors duration-200
-              ${isRunning ? "cursor-not-allowed" : "hover:text-white hover:bg-gray-500"}`}
+            className={`p-2 rounded-full text-gray-200 transition-colors duration-200
+              ${isRunning ? "cursor-not-allowed text-gray-500" : "hover:text-white hover:bg-gray-500"}`}
             title="Reset current session"
           >
             <ArrowPathIcon className="w-6 h-6" />
@@ -106,8 +106,8 @@ export default function App() {
           <button
             onClick={handleSkip}
             disabled={isRunning}
-            className={`p-2 rounded-full text-white/80 transition-colors duration-200
-                ${isRunning ? "cursor-not-allowed" : "hover:text-white hover:bg-gray-500"}`}
+            className={`p-2 rounded-full text-gray-200 transition-colors duration-200
+                ${isRunning ? "cursor-not-allowed text-gray-500" : "hover:text-white hover:bg-gray-500"}`}
             title="Skip to next session"
           >
             <ArrowRightIcon className="w-6 h-6" />
