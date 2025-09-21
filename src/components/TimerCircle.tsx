@@ -70,7 +70,7 @@ export const TimerCircle: React.FC<TimerCircleProps> = ({
 
             {/* Timer content */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                <div className="text-4xl md:text-5xl lg:text-6xl font-bold">
+                <div className="text-4xl md:text-5xl lg:text-6xl font-bold font-mono">
                     {formatTime(Math.floor(timeLeft / 1000))}
                 </div>
                 <div className="text-xl md:text-2xl lg:text-3xl mt-2">
