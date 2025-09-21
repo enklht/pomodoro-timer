@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Cog6ToothIcon, ArrowRightIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
 import { playSound } from 'react-sounds';
 import { SettingsModal } from "./components/SettingsModal";
@@ -21,16 +21,18 @@ export default function App() {
   const [autoStart, setAutoStart] = useState(true);
   const [notify, setNotify] = useState(true);
 
-  const playCompletedSound = () => playSound("notification/completed");
+  const playCompletedSound = () => void playSound("notification/completed");
 
-  const getTimeForSession = (isWork: boolean, workSessions: number) =>
+  const getTimeForSession = useCallback((isWork: boolean, workSessions: number) =>
     (isWork ? workMinutes :
       workSessions % longBreakInterval === 0 ? longBreakMinutes : shortBreakMinutes)
-    * 60 * 1000;
+    * 60 * 1000,
+    [workMinutes, longBreakMinutes, shortBreakMinutes, longBreakInterval]
+  );
 
   useEffect(() => {
     setTimeLeft(getTimeForSession(isWork, workSessions))
-  }, [workMinutes, shortBreakMinutes, longBreakMinutes])
+  }, [getTimeForSession, isWork, workSessions])
 
   // Timer logic
   useEffect(() => {
@@ -58,9 +60,9 @@ export default function App() {
     }
 
     setTimeout(countDown, 100);
-  }, [timeLeft, isRunning]);
+  });
 
-  const toggleTimer = () => setIsRunning(!isRunning);
+  const toggleTimer = () => { setIsRunning(!isRunning) };
 
   const handleSkip = () => {
     setTimeLeft(getTimeForSession(!isWork, isWork ? workSessions + 1 : workSessions));
@@ -79,7 +81,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-gray-600">
       <button
-        onClick={() => setShowSettings(true)}
+        onClick={() => { setShowSettings(true) }}
         disabled={isRunning}
         className={`absolute top-4 right-4 p-2 rounded-full text-gray-200 transition-colors duration-200
           ${isRunning ? "cursor-not-allowed text-gray-500" : "hover:text-white hover:bg-gray-500"}`}
@@ -133,7 +135,7 @@ export default function App() {
         onLongBreakIntervalChange={setLongBreakInterval}
         onAutoStartChange={setAutoStart}
         onNotifyChange={setNotify}
-        onClose={() => setShowSettings(false)}
+        onClose={() => { setShowSettings(false); }}
       />
     </div >
   );

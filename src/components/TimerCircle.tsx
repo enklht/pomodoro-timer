@@ -52,7 +52,7 @@ export const TimerCircle: React.FC<TimerCircleProps> = ({
                     ${isWork ? 'bg-red-400' : 'bg-blue-400'}
                 `}
                 style={{
-                    height: `${progress * 100}%`,
+                    height: `${String(progress * 100)}%`,
                 } as React.CSSProperties}
             >
                 {isRunning && [

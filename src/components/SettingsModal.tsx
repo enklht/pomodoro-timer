@@ -64,7 +64,7 @@ export function SettingsModal({
                         inputMode="numeric"
                         pattern="[0-9]*"
                         value={workMinutes}
-                        onChange={(e) => onWorkMinutesChange(Number(e.target.value))}
+                        onChange={(e) => { onWorkMinutesChange(Number(e.target.value)); }}
                         className="w-full border rounded px-2 py-1"
                     />
                 </div>
@@ -76,7 +76,7 @@ export function SettingsModal({
                         inputMode="numeric"
                         pattern="[0-9]*"
                         value={shortBreakMinutes}
-                        onChange={(e) => onShortBreakMinutesChange(Number(e.target.value))}
+                        onChange={(e) => { onShortBreakMinutesChange(Number(e.target.value)); }}
                         className="w-full border rounded px-2 py-1"
                     />
                 </div>
@@ -88,7 +88,7 @@ export function SettingsModal({
                         inputMode="numeric"
                         pattern="[0-9]*"
                         value={longBreakMinutes}
-                        onChange={(e) => onLongBreakMinutesChange(Number(e.target.value))}
+                        onChange={(e) => { onLongBreakMinutesChange(Number(e.target.value)); }}
                         className="w-full border rounded px-2 py-1"
                     />
                 </div>
@@ -100,7 +100,7 @@ export function SettingsModal({
                         inputMode="numeric"
                         pattern="[0-9]*"
                         value={longBreakInterval}
-                        onChange={(e) => onLongBreakIntervalChange(Number(e.target.value))}
+                        onChange={(e) => { onLongBreakIntervalChange(Number(e.target.value)); }}
                         className="w-full border rounded px-2 py-1"
                     />
                 </div>
@@ -111,7 +111,7 @@ export function SettingsModal({
                             type="checkbox"
                             id="autostart"
                             checked={autoStart}
-                            onChange={(e) => onAutoStartChange(e.target.checked)}
+                            onChange={(e) => { onAutoStartChange(e.target.checked); }}
                             className="mr-2"
                         />
                         Auto Start
@@ -124,7 +124,7 @@ export function SettingsModal({
                             type="checkbox"
                             id="autostart"
                             checked={notify}
-                            onChange={(e) => onNotifyChange(e.target.checked)}
+                            onChange={(e) => { onNotifyChange(e.target.checked); }}
                             className="mr-2"
                         />
                         Notify
