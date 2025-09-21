@@ -5,7 +5,8 @@ import { SettingsModal } from "./components/SettingsModal";
 import TimerCircle from "./components/TimerCircle";
 
 export default function App() {
-  const [timeLeft, setTimeLeft] = useState(25 * 60);
+  const [timeLeft, setTimeLeft] = useState(25 * 60 * 1000);
+  const [referenceTime, setReferenceTime] = useState(Date.now());
   const [isRunning, setIsRunning] = useState(false);
   const [isWork, setIsWork] = useState(true);
   const [workSessions, setWorkSessions] = useState(0);
@@ -22,12 +23,10 @@ export default function App() {
 
   const playCompletedSound = () => playSound("notification/completed");
 
-  const getTimeForSession = (isWorkSession: boolean, sessions: number) =>
-    isWorkSession
-      ? workMinutes * 60
-      : sessions % longBreakInterval === 0
-        ? longBreakMinutes * 60
-        : shortBreakMinutes * 60;
+  const getTimeForSession = (isWork: boolean, workSessions: number) =>
+    (isWork ? workMinutes :
+      workSessions % longBreakInterval === 0 ? longBreakMinutes : shortBreakMinutes)
+    * 60 * 1000;
 
   useEffect(() => {
     setTimeLeft(getTimeForSession(isWork, workSessions))
@@ -37,9 +36,14 @@ export default function App() {
   useEffect(() => {
     if (!isRunning) return;
 
-    const timer = setInterval(() => {
+    const countDown = () => {
       setTimeLeft(t => {
-        if (t > 0) return t - 1;
+        if (t > 0) {
+          const now = Date.now();
+          const interval = now - referenceTime;
+          setReferenceTime(now);
+          return t - interval
+        }
 
         // Time's up
         if (notify) playCompletedSound();
@@ -50,11 +54,11 @@ export default function App() {
         if (!autoStart) setIsRunning(false);
 
         return getTimeForSession(!isWork, isWork ? workSessions + 1 : workSessions);
-      });
-    }, 1000);
+      })
+    }
 
-    return () => clearInterval(timer);
-  }, [isRunning, isWork, workMinutes, shortBreakMinutes, autoStart]);
+    setTimeout(countDown, 100);
+  }, [timeLeft, isRunning]);
 
   const toggleTimer = () => setIsRunning(!isRunning);
 
