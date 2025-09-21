@@ -24,8 +24,8 @@ export default function App() {
   const playCompletedSound = () => void playSound("notification/completed");
 
   const getTimeForSession = useCallback((isWork: boolean, workSessions: number) =>
-    (isWork ? workMinutes :
-      workSessions % longBreakInterval === 0 ? longBreakMinutes : shortBreakMinutes)
+    (isWork ? workMinutes
+      : workSessions % longBreakInterval === 0 ? longBreakMinutes : shortBreakMinutes)
     * 60 * 1000,
     [workMinutes, longBreakMinutes, shortBreakMinutes, longBreakInterval]
   );
@@ -62,7 +62,12 @@ export default function App() {
     setTimeout(countDown, 100);
   });
 
-  const toggleTimer = () => { setIsRunning(!isRunning) };
+  const toggleTimer = () => {
+    if (!isRunning) {
+      setReferenceTime(Date.now());
+    }
+    setIsRunning(!isRunning);
+  };
 
   const handleSkip = () => {
     setTimeLeft(getTimeForSession(!isWork, isWork ? workSessions + 1 : workSessions));
@@ -96,6 +101,7 @@ export default function App() {
           totalTime={getTimeForSession(isWork, workSessions)}
           isWork={isWork}
           isRunning={isRunning}
+          longBreakInterval={longBreakInterval}
           workSessions={workSessions}
           onClick={toggleTimer}
         />

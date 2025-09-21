@@ -6,6 +6,7 @@ interface TimerCircleProps {
     totalTime: number;
     isWork: boolean;
     isRunning: boolean;
+    longBreakInterval: number;
     workSessions: number;
     onClick: () => void;
 }
@@ -15,6 +16,7 @@ export const TimerCircle: React.FC<TimerCircleProps> = ({
     totalTime,
     isWork,
     isRunning,
+    longBreakInterval,
     workSessions,
     onClick
 }) => {
@@ -28,7 +30,9 @@ export const TimerCircle: React.FC<TimerCircleProps> = ({
         return `${m}:${s}`;
     };
 
-    const sessionType = isWork ? "Work" : workSessions % 4 === 0 ? "Long Break" : "Short Break";
+    const sessionType = isWork
+        ? "Work"
+        : workSessions % longBreakInterval === 0 ? "Long Break" : "Short Break";
     const actionText = isRunning ? "Click to Pause" : "Click to Start";
 
     return (
